@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sylvie.rs — Robotics & Optics</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              paperLight: '#EFECE6',
+              cardLight: '#E3DFD5',
+              paperDark: '#0E0F11',
+              cardDark: '#17181C',
+            },
+            fontFamily: {
+              // 精准复刻截图的高对比斜体衬线字 (Cormorant Garamond)
+              cinemaItalic: ['"Cormorant Garamond"', 'serif'],
+              // 技术标签专用清爽字体
+              grotesk: ['"Space Grotesk"', 'sans-serif'],
+              sans: ['"Inter"', '"Noto Sans SC"', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            }
+          }
+        }
+      }
+    </script>
+    <!-- Google Fonts 引入 Cormorant Garamond (Italic) + Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+      body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    </style>
+</head>
+<body class="bg-paperLight dark:bg-paperDark text-neutral-900 dark:text-neutral-100 font-sans antialiased transition-colors duration-300 min-h-screen">
+
+  <div class="max-w-5xl mx-auto px-6 py-8 min-h-screen flex flex-col justify-between space-y-16">
+
+    <!-- 1. 页头 -->
+    <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5 pb-6 border-b border-black/10 dark:border-white/10">
+      <div class="flex items-center gap-3">
+        <span class="font-mono text-base font-bold tracking-tight">sylvie.rs</span>
+        <span class="text-xs px-2.5 py-0.5 rounded-full bg-black/5 dark:bg-white/10 font-mono text-neutral-600 dark:text-neutral-400">ROBOTICS / CV / OPTICS</span>
+      </div>
+
+      <nav class="flex w-full sm:w-auto items-center justify-between sm:justify-start gap-2 sm:gap-3 text-sm sm:text-base font-sans font-semibold" aria-label="页面导航">
+        <a href="#metrics" class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 bg-black/[0.025] dark:bg-white/[0.035] hover:border-black/30 dark:hover:border-white/30 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">指标</a>
+        <a href="#projects" class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 bg-black/[0.025] dark:bg-white/[0.035] hover:border-black/30 dark:hover:border-white/30 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">工程</a>
+        <a href="#photos" class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 bg-black/[0.025] dark:bg-white/[0.035] hover:border-black/30 dark:hover:border-white/30 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">摄影</a>
+        <button id="themeToggle" class="px-3 py-1 rounded-full border border-black/20 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/10 transition-colors font-mono text-[11px]">
+          MODE ◐
+        </button>
+      </nav>
+    </header>
+
+    <!-- 2. 首屏标题 (复刻截图 Cormorant Garamond 经典斜体衬线字 + 完全左对齐) -->
+    <section class="space-y-8">
+      <div class="space-y-4 max-w-3xl">
+        <h1 class="font-cinemaItalic italic text-[clamp(2rem,6vw,4.5rem)] font-semibold leading-[0.98] text-neutral-950 dark:text-neutral-50 tracking-normal text-left">
+          <span class="whitespace-nowrap">Robotics, Computer Vision</span><br/>
+          Vif<span class="inline-block ml-[0.08em]">Argent</span>
+        </h1>
+        <p class="font-sans text-base sm:text-lg font-medium text-neutral-600 dark:text-neutral-300 leading-relaxed max-w-2xl border-l-2 border-black/15 dark:border-white/20 pl-4">
+          机器人工程在读，关注嵌入式底盘、算法闭环与计算机视觉。用 Sony A7R2 与 35-150mm 镜头记录微观结构与夜间光影。
+        </p>
+      </div>
+
+      <!-- 首屏大图：展示你的本地《黄色海.jpg》 -->
+      <div class="rounded-3xl overflow-hidden aspect-[21/9] bg-neutral-900 border border-black/10 dark:border-white/10 shadow-lg relative">
+        <img src="./黄色海.jpg"
+             alt="Hero Ocean Feature"
+             class="w-full h-full object-cover"/>
+      </div>
+    </section>
+
+    <!-- 3. 硬核数据指标栏 -->
+    <section id="metrics" class="grid grid-cols-2 md:grid-cols-4 gap-4 py-6 border-y border-black/10 dark:border-white/10">
+      <div class="space-y-1">
+        <div class="font-mono text-3xl font-bold tracking-tight text-neutral-950 dark:text-neutral-50">200<span class="text-base text-emerald-600 dark:text-emerald-400">Hz</span></div>
+        <div class="font-mono text-[11px] text-neutral-500 uppercase tracking-wider">ROS2 导航控制闭环</div>
+      </div>
+      <div class="space-y-1">
+        <div class="font-mono text-3xl font-bold tracking-tight text-neutral-950 dark:text-neutral-50">4<span class="text-base text-emerald-600 dark:text-emerald-400">-Layer</span></div>
+        <div class="font-mono text-[11px] text-neutral-500 uppercase tracking-wider">FOC 电机驱动 PCB 设计</div>
+      </div>
+      <div class="space-y-1">
+        <div class="font-mono text-3xl font-bold tracking-tight text-neutral-950 dark:text-neutral-50">35-150<span class="text-base text-emerald-600 dark:text-emerald-400">mm</span></div>
+        <div class="font-mono text-[11px] text-neutral-500 uppercase tracking-wider">变焦光学全焦段覆盖</div>
+      </div>
+      <div class="space-y-1">
+        <div class="font-mono text-3xl font-bold tracking-tight text-neutral-950 dark:text-neutral-50">42.4<span class="text-base text-emerald-600 dark:text-emerald-400">MP</span></div>
+        <div class="font-mono text-[11px] text-neutral-500 uppercase tracking-wider">全画幅微观细节采样</div>
+      </div>
+    </section>
+
+    <!-- 4. 技术能力矩阵 (Space Grotesk + 清爽 Block) -->
+    <section class="space-y-4">
+      <div class="text-xs font-grotesk text-neutral-500 uppercase tracking-wider font-semibold">// TECHNICAL CAPABILITIES</div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+        <div class="p-4 rounded-xl bg-cardLight dark:bg-cardDark border border-black/5 dark:border-white/10 space-y-3">
+          <div class="font-grotesk text-xs font-bold text-neutral-950 dark:text-neutral-50">[01] SYSTEM & EMBEDDED</div>
+          <div class="flex flex-wrap gap-1.5 font-grotesk text-xs">
+            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">Linux PREEMPT_RT</span>
+            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">ROS2</span>
+            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">C++20</span>
+            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">STM32F4</span>
+            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">CAN 2.0B</span>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-cardLight dark:bg-cardDark border border-black/5 dark:border-white/10 space-y-3">
+          <div class="font-grotesk text-xs font-bold text-neutral-950 dark:text-neutral-50">[02] PERCEPTION & CV</div>
+          <div class="flex flex-wrap gap-1.5 font-grotesk text-xs">
+            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">RK3588 NPU</span>
+            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">TensorRT</span>
+            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">OpenCV CUDA</span>
+            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">零拷贝共享内存</span>
+            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">双目视觉</span>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-cardLight dark:bg-cardDark border border-black/5 dark:border-white/10 space-y-3">
+          <div class="font-grotesk text-xs font-bold text-neutral-950 dark:text-neutral-50">[03] OPTICS & VISUALS</div>
+          <div class="flex flex-wrap gap-1.5 font-grotesk text-xs">
+            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">Sony A7R2</span>
+            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">35-150mm F2-2.8</span>
+            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">结构质感摄影</span>
+            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">色散评估</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. 工程时间轴 -->
+    <section id="projects" class="space-y-6">
+      <div class="flex justify-between items-baseline border-b border-black/10 dark:border-white/10 pb-3">
+        <h2 class="font-cinemaItalic italic text-3xl font-bold">工程项目与研发里程碑</h2>
+        <span class="text-xs font-mono text-neutral-500">DEVELOPMENT LOG</span>
+      </div>
+
+      <div class="space-y-4">
+
+        <div class="rounded-2xl p-6 bg-cardLight dark:bg-cardDark border border-black/5 dark:border-white/10 flex flex-col md:flex-row gap-6 justify-between items-start">
+          <div class="space-y-2 max-w-2xl">
+            <div class="flex items-center gap-3">
+              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">2026.06 — PRESENT</span>
+              <span class="text-xs font-mono text-neutral-500">v2.1 RELEASE</span>
+            </div>
+            <h3 class="font-sans text-xl font-bold">RK3588 零拷贝视觉导航 Pipeline</h3>
+            <p class="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              基于 ROS2 与共享内存的高吞吐 IPC 架构，在 RK3588 板载 NPU 上实现 200Hz 闭环导航控制，优化图像传输吞吐延迟。
+            </p>
+          </div>
+          <div class="font-grotesk text-xs font-bold text-neutral-800 dark:text-neutral-200 whitespace-nowrap bg-black/5 dark:bg-white/5 px-3 py-2 rounded-lg">
+            C++20 / ROS2 / TensorRT
+          </div>
+        </div>
+
+        <div class="rounded-2xl p-6 bg-cardLight dark:bg-cardDark border border-black/5 dark:border-white/10 flex flex-col md:flex-row gap-6 justify-between items-start">
+          <div class="space-y-2 max-w-2xl">
+            <div class="flex items-center gap-3">
+              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-black/5 dark:bg-white/10 text-neutral-500">2026.03 — ARCHIVED</span>
+              <span class="text-xs font-mono text-neutral-500">v1.0 HARDWARE</span>
+            </div>
+            <h3 class="font-sans text-xl font-bold">双路 FOC 无刷电机驱动板设计</h3>
+            <p class="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              4 层 PCB 布局，集成硬件采样电流环与 CAN 2.0B 总线通信，专注于机器人关节伺服控制与低速高扭矩响应。
+            </p>
+          </div>
+          <div class="font-grotesk text-xs font-bold text-neutral-800 dark:text-neutral-200 whitespace-nowrap bg-black/5 dark:bg-white/5 px-3 py-2 rounded-lg">
+            STM32F4 / KiCad / CAN
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. 摄影与镜头记录 (加载你给的本地图二与图三) -->
+    <section id="photos" class="space-y-6">
+      <div class="flex justify-between items-baseline border-b border-black/10 dark:border-white/10 pb-3">
+        <h2 class="font-cinemaItalic italic text-3xl font-bold">光学与摄影手记</h2>
+        <span class="text-sm font-mono font-bold text-emerald-700 dark:text-emerald-400">A7R2 + 35-150mm F2-2.8</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Photo Item 1 (图二：黄色海.jpg) -->
+        <div class="rounded-2xl p-5 bg-cardLight dark:bg-cardDark border border-black/5 dark:border-white/10 space-y-4">
+          <div class="aspect-[16/10] bg-neutral-900 rounded-xl overflow-hidden relative">
+            <img src="./黄色海.jpg"
+                 alt="Golden Ocean"
+                 class="w-full h-full object-cover"/>
+          </div>
+          <div class="space-y-2">
+            <div class="flex justify-between items-center font-mono text-sm pt-1">
+              <span class="font-bold text-neutral-950 dark:text-neutral-50">[OPTICS-01] 浪潮与波光边缘</span>
+              <span class="font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">35mm · f/2.0</span>
+            </div>
+            <p class="text-xs text-neutral-600 dark:text-neutral-400 font-mono">
+              EXIF: 1/500s · ISO 200 | 暮色水面高光动态范围捕捉与暗部噪点压制。
+            </p>
+          </div>
+        </div>
+
+        <!-- Photo Item 2（教堂.jpg，网页压缩版） -->
+        <div class="rounded-2xl p-5 bg-cardLight dark:bg-cardDark border border-black/5 dark:border-white/10 space-y-4">
+          <div class="aspect-[16/10] bg-neutral-900 rounded-xl overflow-hidden relative">
+            <img src="./教堂.jpg"
+                 alt="教堂玫瑰花窗"
+                 class="w-full h-full object-cover"/>
+          </div>
+          <div class="space-y-2">
+            <div class="flex justify-between items-center font-mono text-sm pt-1">
+              <span class="font-bold text-neutral-950 dark:text-neutral-50">[OPTICS-02] 玫瑰花窗微观光谱</span>
+              <span class="font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">150mm · f/2.8</span>
+            </div>
+            <p class="text-xs text-neutral-600 dark:text-neutral-400 font-mono">
+              EXIF: 1/250s · ISO 400 | 长焦端高色彩饱和度透光结构与几何锐度测试。
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 7. 页脚 -->
+    <footer class="pt-8 border-t border-black/10 dark:border-white/10 flex justify-between items-center font-mono text-xs text-neutral-500">
+      <div>SYLVIE.RS © 2026</div>
+      <div class="flex gap-6 font-semibold">
+        <a href="https://github.com/SylvieChristian" target="_blank" rel="noopener noreferrer" class="hover:text-neutral-900 dark:hover:text-white transition-colors">GITHUB</a>
+        <a href="#" class="hover:text-neutral-900 dark:hover:text-white transition-colors">BILIBILI</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    const themeToggleBtn = document.getElementById('themeToggle');
+    themeToggleBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+  </script>
+</body>
+</html>
