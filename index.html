@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sylvie.rs — Robotics & Optics</title>
+    <meta name="description" content="Robotics engineering, computer vision, and optical photography portfolio. ROS2, RK3588, Sony A7R2.">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="sylvie.rs — Robotics & Optics">
+    <meta property="og:description" content="机器人工程 / 计算机视觉 / 光学摄影。用 Sony A7R2 与 35-150mm 镜头记录微观结构与夜间光影。">
+    <meta property="og:image" content="./黄色海.jpg">
+    <meta property="og:url" content="https://sylvie.rs">
+    <meta property="og:locale" content="zh_CN">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="sylvie.rs — Robotics & Optics">
+    <meta name="twitter:description" content="Robotics / Computer Vision / Optical Photography Portfolio">
+    <meta name="twitter:image" content="./黄色海.jpg">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -11,240 +24,397 @@
         darkMode: 'class',
         theme: {
           extend: {
-            colors: {
-              paperLight: '#EFECE6',
-              cardLight: '#E3DFD5',
-              paperDark: '#0E0F11',
-              cardDark: '#17181C',
-            },
             fontFamily: {
-              // 精准复刻截图的高对比斜体衬线字 (Cormorant Garamond)
-              cinemaItalic: ['"Cormorant Garamond"', 'serif'],
-              // 技术标签专用清爽字体
-              grotesk: ['"Space Grotesk"', 'sans-serif'],
-              sans: ['"Inter"', '"Noto Sans SC"', 'sans-serif'],
+              display: ['"Bodoni Moda"', 'serif'],
+              sans: ['"Inter"', '"Noto Sans SC"', 'system-ui', 'sans-serif'],
               mono: ['"JetBrains Mono"', 'monospace'],
             }
           }
         }
       }
     </script>
-    <!-- Google Fonts 引入 Cormorant Garamond (Italic) + Space Grotesk -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-      body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+      :root {
+        --page-bg: #F3F0E9;
+        --surface: #E8E3D9;
+        --text-primary: #11110F;
+        --text-body: #292824;
+        --text-muted: #56534E;
+        --text-faint: #6C6962;
+        --border: rgba(20,20,20,0.18);
+        --border-light: rgba(20,20,20,0.11);
+        --accent: #63B58D;
+      }
+      .dark {
+        --page-bg: #101113;
+        --surface: #16171A;
+        --text-primary: #E8E5DF;
+        --text-body: #C3C0BA;
+        --text-muted: #92908B;
+        --text-faint: #74736F;
+        --border: rgba(255,255,255,0.09);
+        --border-light: rgba(255,255,255,0.06);
+        --accent: #63B58D;
+      }
+      html { scroll-behavior: smooth; }
+      body { -webkit-font-smoothing: auto; -moz-osx-font-smoothing: auto; }
+      h1, h2, h3 { text-wrap: balance; }
+      .font-mono { font-variant-numeric: tabular-nums; }
+      ::selection { background: rgba(99, 181, 141, 0.2); color: inherit; }
+      [id] { scroll-margin-top: 4.5rem; }
+
+      :focus-visible { outline: 2px solid #63B58D; outline-offset: 2px; border-radius: 2px; }
+
+      .reveal { opacity: 0; transform: translateY(8px); transition: opacity 0.4s ease, transform 0.4s ease; }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+
+      .lightbox { opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
+      .lightbox.active { opacity: 1; pointer-events: auto; }
+      .lightbox img { transform: scale(0.95); transition: transform 0.25s ease; }
+      .lightbox.active img { transform: scale(1); }
+
+      .noise-layer { z-index: 0; }
+
+      .hero-wordmark {
+        font-optical-sizing: none;
+        font-variation-settings: "opsz" 36, "wght" 500;
+        font-weight: 500;
+      }
+
+      .tag-pill {
+        display: inline-block;
+        padding: 1px 7px;
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        background: var(--surface);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 1.5;
+        white-space: nowrap;
+      }
+
+      .nav-link { position: relative; }
+      .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: currentColor; transition: width 0.2s ease; }
+      .nav-link:hover::after { width: 100%; }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .reveal { transition: none; opacity: 1; transform: none; }
+        .lightbox, .lightbox img { transition: none; }
+      }
     </style>
 </head>
-<body class="bg-paperLight dark:bg-paperDark text-neutral-900 dark:text-neutral-100 font-sans antialiased transition-colors duration-300 min-h-screen">
+<body class="bg-[var(--page-bg)] text-[var(--text-primary)] font-sans transition-colors duration-300 min-h-screen">
 
-  <div class="max-w-5xl mx-auto px-6 py-8 min-h-screen flex flex-col justify-between space-y-16">
+  <!-- Noise texture (behind content) -->
+  <div class="noise-layer fixed inset-0 pointer-events-none opacity-[0.01] dark:opacity-[0.025]" aria-hidden="true">
+    <svg width="100%" height="100%"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#noise)"/></svg>
+  </div>
 
-    <!-- 1. 页头 -->
-    <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5 pb-6 border-b border-black/10 dark:border-white/10">
-      <div class="flex items-center gap-3">
-        <span class="font-mono text-base font-bold tracking-tight">sylvie.rs</span>
-        <span class="text-xs px-2.5 py-0.5 rounded-full bg-black/5 dark:bg-white/10 font-mono text-neutral-600 dark:text-neutral-400">ROBOTICS / CV / OPTICS</span>
+  <!-- Header -->
+  <header class="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--page-bg)]/90 backdrop-blur-sm">
+    <div class="max-w-5xl mx-auto px-5 sm:px-6 flex items-center justify-between h-14">
+      <div class="flex items-center gap-2.5">
+        <span class="font-mono text-[13px] font-medium tracking-tight">sylvie.rs</span>
+        <span class="h-1 w-1 rounded-full bg-[var(--accent)]" aria-hidden="true"></span>
+        <span class="hidden sm:inline font-mono text-[11px] text-[var(--text-muted)] font-medium tracking-[0.08em] uppercase">Robotics / CV / Optics</span>
       </div>
 
-      <nav class="flex w-full sm:w-auto items-center justify-between sm:justify-start gap-2 sm:gap-3 text-sm sm:text-base font-sans font-semibold" aria-label="页面导航">
-        <a href="#metrics" class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 bg-black/[0.025] dark:bg-white/[0.035] hover:border-black/30 dark:hover:border-white/30 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">指标</a>
-        <a href="#projects" class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 bg-black/[0.025] dark:bg-white/[0.035] hover:border-black/30 dark:hover:border-white/30 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">工程</a>
-        <a href="#photos" class="px-3 py-1.5 rounded-full border border-black/10 dark:border-white/10 bg-black/[0.025] dark:bg-white/[0.035] hover:border-black/30 dark:hover:border-white/30 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">摄影</a>
-        <button id="themeToggle" class="px-3 py-1 rounded-full border border-black/20 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/10 transition-colors font-mono text-[11px]">
-          MODE ◐
+      <nav class="flex items-center gap-4 sm:gap-5 text-[13px] font-medium" aria-label="页面导航">
+        <a href="#metrics" class="nav-link text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors">指标</a>
+        <a href="#projects" class="nav-link text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors">工程</a>
+        <a href="#photos" class="nav-link text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors">摄影</a>
+        <button id="themeToggle" aria-label="切换主题" class="font-mono text-[11px] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors w-[56px] text-center py-0.5 border border-[var(--border)] rounded-sm">
+          DARK
         </button>
       </nav>
-    </header>
+    </div>
+  </header>
 
-    <!-- 2. 首屏标题 (复刻截图 Cormorant Garamond 经典斜体衬线字 + 完全左对齐) -->
-    <section class="space-y-8">
-      <div class="space-y-4 max-w-3xl">
-        <h1 class="font-cinemaItalic italic text-[clamp(2rem,6vw,4.5rem)] font-semibold leading-[0.98] text-neutral-950 dark:text-neutral-50 tracking-normal text-left">
-          <span class="whitespace-nowrap">Robotics, Computer Vision</span><br/>
-          Vif<span class="inline-block ml-[0.08em]">Argent</span>
+  <main class="relative z-10 max-w-5xl mx-auto px-5 sm:px-6">
+
+    <!-- Hero: asymmetric editorial layout -->
+    <section class="reveal min-h-[calc(100svh-3.5rem)] flex flex-col lg:grid lg:grid-cols-[42%_1fr] lg:gap-12 xl:gap-16 lg:items-stretch pt-8 pb-10 lg:py-6 max-w-6xl mx-auto">
+
+      <!-- Left: text column -->
+      <div class="flex flex-col justify-center lg:pr-2">
+        <p class="font-mono text-[11px] text-[var(--text-muted)] font-medium uppercase tracking-[0.14em]">Robotics / Vision / Optics</p>
+
+        <h1 class="hero-wordmark font-display text-[clamp(3.3rem,18vw,5.5rem)] lg:text-[clamp(4.5rem,6.7vw,7.2rem)] leading-[0.88] tracking-[-0.018em] text-[var(--text-primary)] mt-5 lg:mt-6">
+          VifArgent
         </h1>
-        <p class="font-sans text-base sm:text-lg font-medium text-neutral-600 dark:text-neutral-300 leading-relaxed max-w-2xl border-l-2 border-black/15 dark:border-white/20 pl-4">
-          机器人工程在读，关注嵌入式底盘、算法闭环与计算机视觉。用 Sony A7R2 与 35-150mm 镜头记录微观结构与夜间光影。
+
+        <p class="text-[20px] sm:text-[24px] lg:text-[26px] font-medium leading-[1.35] text-[var(--text-primary)] mt-5 lg:mt-7">
+          机器、视觉，以及光的记录
+        </p>
+
+        <p class="text-[15px] sm:text-[16px] leading-[1.75] font-medium text-[var(--text-body)] max-w-[420px] border-l border-[#63B58D]/35 pl-4 mt-4 lg:mt-5">
+          机器人工程在读，关注嵌入式系统、算法闭环与计算机视觉；用 Sony A7R2 记录微观结构与夜间光影。
+        </p>
+
+        <p class="font-mono text-[11px] text-[var(--text-faint)] font-medium tracking-[0.04em] mt-5 lg:mt-6">
+          ROS2 · EMBEDDED LINUX / A7R2 · 35–150MM
         </p>
       </div>
 
-      <!-- 首屏大图：展示你的本地《黄色海.jpg》 -->
-      <div class="rounded-3xl overflow-hidden aspect-[21/9] bg-neutral-900 border border-black/10 dark:border-white/10 shadow-lg relative">
-        <img src="./黄色海.jpg"
-             alt="Hero Ocean Feature"
-             class="w-full h-full object-cover"/>
+      <!-- Right: hero photo -->
+      <figure class="mt-8 lg:mt-0 flex flex-col justify-center">
+        <div class="rounded-lg overflow-hidden border border-[var(--border)] relative">
+          <img src="./黄色海.jpg"
+               alt="暮色海面，金色波光与暗部层次"
+               width="1920" height="1080"
+               loading="eager" fetchpriority="high" decoding="async"
+               class="w-full h-[34svh] sm:h-[40svh] lg:h-[65svh] lg:max-h-[650px] object-cover object-center"/>
+        </div>
+        <figcaption class="mt-2 font-mono text-[11px] text-[var(--text-faint)] font-medium tracking-[0.04em]">
+          A7R2 / 35mm / f2.0 / 1/500 / ISO 200
+        </figcaption>
+      </figure>
+
+    </section>
+
+    <!-- Metrics: archive-style spec bar -->
+    <section id="metrics" class="py-10 border-t border-[var(--border)] reveal">
+      <div class="grid grid-cols-2 md:grid-cols-4 divide-x divide-[var(--border-light)]">
+        <div class="px-4 first:pl-0 space-y-1">
+          <div class="font-mono text-lg sm:text-xl font-medium text-[var(--text-primary)]">200<span class="text-[13px] text-[var(--accent)] ml-0.5">Hz</span></div>
+          <div class="text-[12px] text-[var(--text-muted)] font-medium leading-snug">ROS2 导航控制闭环</div>
+        </div>
+        <div class="px-4 space-y-1">
+          <div class="font-mono text-lg sm:text-xl font-medium text-[var(--text-primary)]">4<span class="text-[13px] text-[var(--accent)] ml-0.5">Layer</span></div>
+          <div class="text-[12px] text-[var(--text-muted)] font-medium leading-snug">FOC 电机驱动 PCB</div>
+        </div>
+        <div class="px-4 space-y-1">
+          <div class="font-mono text-lg sm:text-xl font-medium text-[var(--text-primary)]">35-150<span class="text-[13px] text-[var(--accent)] ml-0.5">mm</span></div>
+          <div class="text-[12px] text-[var(--text-muted)] font-medium leading-snug">变焦全焦段覆盖</div>
+        </div>
+        <div class="px-4 space-y-1">
+          <div class="font-mono text-lg sm:text-xl font-medium text-[var(--text-primary)]">42.4<span class="text-[13px] text-[var(--accent)] ml-0.5">MP</span></div>
+          <div class="text-[12px] text-[var(--text-muted)] font-medium leading-snug">全画幅微观采样</div>
+        </div>
       </div>
     </section>
 
-    <!-- 3. 硬核数据指标栏 -->
-    <section id="metrics" class="grid grid-cols-2 md:grid-cols-4 gap-4 py-6 border-y border-black/10 dark:border-white/10">
-      <div class="space-y-1">
-        <div class="font-mono text-3xl font-bold tracking-tight text-neutral-950 dark:text-neutral-50">200<span class="text-base text-emerald-600 dark:text-emerald-400">Hz</span></div>
-        <div class="font-mono text-[11px] text-neutral-500 uppercase tracking-wider">ROS2 导航控制闭环</div>
+    <!-- Technical Capabilities: structured matrix -->
+    <section class="py-10 border-t border-[var(--border)] reveal">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2 class="text-[22px] sm:text-[26px] font-semibold leading-tight">技术能力矩阵</h2>
+        <span class="font-mono text-[11px] text-[var(--text-faint)] font-medium tracking-[0.1em] hidden sm:inline">01 / Specifications</span>
       </div>
-      <div class="space-y-1">
-        <div class="font-mono text-3xl font-bold tracking-tight text-neutral-950 dark:text-neutral-50">4<span class="text-base text-emerald-600 dark:text-emerald-400">-Layer</span></div>
-        <div class="font-mono text-[11px] text-neutral-500 uppercase tracking-wider">FOC 电机驱动 PCB 设计</div>
-      </div>
-      <div class="space-y-1">
-        <div class="font-mono text-3xl font-bold tracking-tight text-neutral-950 dark:text-neutral-50">35-150<span class="text-base text-emerald-600 dark:text-emerald-400">mm</span></div>
-        <div class="font-mono text-[11px] text-neutral-500 uppercase tracking-wider">变焦光学全焦段覆盖</div>
-      </div>
-      <div class="space-y-1">
-        <div class="font-mono text-3xl font-bold tracking-tight text-neutral-950 dark:text-neutral-50">42.4<span class="text-base text-emerald-600 dark:text-emerald-400">MP</span></div>
-        <div class="font-mono text-[11px] text-neutral-500 uppercase tracking-wider">全画幅微观细节采样</div>
-      </div>
+      <dl class="space-y-0 divide-y divide-[var(--border-light)]">
+        <div class="py-3.5 grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-1 sm:gap-4 items-baseline">
+          <dt class="font-mono text-[11px] text-[var(--text-muted)] font-medium uppercase tracking-[0.08em]">Systems</dt>
+          <dd class="text-[14px] sm:text-[15px] leading-[1.65] text-[var(--text-body)]">Linux PREEMPT_RT / ROS2 / STM32F4 / C++20</dd>
+        </div>
+        <div class="py-3.5 grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-1 sm:gap-4 items-baseline">
+          <dt class="font-mono text-[11px] text-[var(--text-muted)] font-medium uppercase tracking-[0.08em]">Perception</dt>
+          <dd class="text-[14px] sm:text-[15px] leading-[1.65] text-[var(--text-body)]">RK3588 NPU / TensorRT / OpenCV CUDA / 双目视觉</dd>
+        </div>
+        <div class="py-3.5 grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-1 sm:gap-4 items-baseline">
+          <dt class="font-mono text-[11px] text-[var(--text-muted)] font-medium uppercase tracking-[0.08em]">Interfaces</dt>
+          <dd class="text-[14px] sm:text-[15px] leading-[1.65] text-[var(--text-body)]">CAN 2.0B / 共享内存 / 零拷贝 IPC</dd>
+        </div>
+        <div class="py-3.5 grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-1 sm:gap-4 items-baseline">
+          <dt class="font-mono text-[11px] text-[var(--text-muted)] font-medium uppercase tracking-[0.08em]">Optics</dt>
+          <dd class="text-[14px] sm:text-[15px] leading-[1.65] text-[var(--text-body)]">Sony A7R2 / 35-150mm F2-2.8 / 结构质感摄影 / 色散评估</dd>
+        </div>
+      </dl>
     </section>
 
-    <!-- 4. 技术能力矩阵 (Space Grotesk + 清爽 Block) -->
-    <section class="space-y-4">
-      <div class="text-xs font-grotesk text-neutral-500 uppercase tracking-wider font-semibold">// TECHNICAL CAPABILITIES</div>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-
-        <div class="p-4 rounded-xl bg-cardLight dark:bg-cardDark border border-black/5 dark:border-white/10 space-y-3">
-          <div class="font-grotesk text-xs font-bold text-neutral-950 dark:text-neutral-50">[01] SYSTEM & EMBEDDED</div>
-          <div class="flex flex-wrap gap-1.5 font-grotesk text-xs">
-            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">Linux PREEMPT_RT</span>
-            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">ROS2</span>
-            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">C++20</span>
-            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">STM32F4</span>
-            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">CAN 2.0B</span>
-          </div>
-        </div>
-
-        <div class="p-4 rounded-xl bg-cardLight dark:bg-cardDark border border-black/5 dark:border-white/10 space-y-3">
-          <div class="font-grotesk text-xs font-bold text-neutral-950 dark:text-neutral-50">[02] PERCEPTION & CV</div>
-          <div class="flex flex-wrap gap-1.5 font-grotesk text-xs">
-            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">RK3588 NPU</span>
-            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">TensorRT</span>
-            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">OpenCV CUDA</span>
-            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">零拷贝共享内存</span>
-            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">双目视觉</span>
-          </div>
-        </div>
-
-        <div class="p-4 rounded-xl bg-cardLight dark:bg-cardDark border border-black/5 dark:border-white/10 space-y-3">
-          <div class="font-grotesk text-xs font-bold text-neutral-950 dark:text-neutral-50">[03] OPTICS & VISUALS</div>
-          <div class="flex flex-wrap gap-1.5 font-grotesk text-xs">
-            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">Sony A7R2</span>
-            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">35-150mm F2-2.8</span>
-            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">结构质感摄影</span>
-            <span class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 text-neutral-800 dark:text-neutral-200">色散评估</span>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- 5. 工程时间轴 -->
-    <section id="projects" class="space-y-6">
-      <div class="flex justify-between items-baseline border-b border-black/10 dark:border-white/10 pb-3">
-        <h2 class="font-cinemaItalic italic text-3xl font-bold">工程项目与研发里程碑</h2>
-        <span class="text-xs font-mono text-neutral-500">DEVELOPMENT LOG</span>
+    <!-- Projects: archive-style list -->
+    <section id="projects" class="py-10 border-t border-[var(--border)] reveal">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2 class="text-[22px] sm:text-[26px] font-semibold leading-tight">工程项目与研发里程碑</h2>
+        <span class="font-mono text-[11px] text-[var(--text-faint)] font-medium tracking-[0.1em] hidden sm:inline">02 / Engineering Log</span>
       </div>
 
-      <div class="space-y-4">
-
-        <div class="rounded-2xl p-6 bg-cardLight dark:bg-cardDark border border-black/5 dark:border-white/10 flex flex-col md:flex-row gap-6 justify-between items-start">
-          <div class="space-y-2 max-w-2xl">
-            <div class="flex items-center gap-3">
-              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">2026.06 — PRESENT</span>
-              <span class="text-xs font-mono text-neutral-500">v2.1 RELEASE</span>
-            </div>
-            <h3 class="font-sans text-xl font-bold">RK3588 零拷贝视觉导航 Pipeline</h3>
-            <p class="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+      <div class="divide-y divide-[var(--border-light)]">
+        <!-- Project 1 -->
+        <article class="py-6 grid grid-cols-1 md:grid-cols-[130px_1fr_auto] gap-2 md:gap-6 items-start group">
+          <div class="flex md:flex-col gap-2 md:gap-1">
+            <time class="font-mono text-[11px] text-[var(--accent)] font-medium">2026.06 — NOW</time>
+            <span class="font-mono text-[11px] text-[var(--text-faint)]">v2.1</span>
+          </div>
+          <div class="space-y-1.5">
+            <h3 class="text-[17px] sm:text-[18px] font-semibold leading-snug group-hover:text-[var(--accent)] dark:group-hover:text-[var(--accent)] transition-colors">RK3588 零拷贝视觉导航 Pipeline</h3>
+            <p class="text-[14px] sm:text-[15px] leading-[1.7] text-[var(--text-body)]">
               基于 ROS2 与共享内存的高吞吐 IPC 架构，在 RK3588 板载 NPU 上实现 200Hz 闭环导航控制，优化图像传输吞吐延迟。
             </p>
           </div>
-          <div class="font-grotesk text-xs font-bold text-neutral-800 dark:text-neutral-200 whitespace-nowrap bg-black/5 dark:bg-white/5 px-3 py-2 rounded-lg">
-            C++20 / ROS2 / TensorRT
+          <div class="flex flex-wrap gap-1.5 md:justify-end">
+            <span class="tag-pill">C++20</span>
+            <span class="tag-pill">ROS2</span>
+            <span class="tag-pill">TensorRT</span>
           </div>
-        </div>
+        </article>
 
-        <div class="rounded-2xl p-6 bg-cardLight dark:bg-cardDark border border-black/5 dark:border-white/10 flex flex-col md:flex-row gap-6 justify-between items-start">
-          <div class="space-y-2 max-w-2xl">
-            <div class="flex items-center gap-3">
-              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-black/5 dark:bg-white/10 text-neutral-500">2026.03 — ARCHIVED</span>
-              <span class="text-xs font-mono text-neutral-500">v1.0 HARDWARE</span>
-            </div>
-            <h3 class="font-sans text-xl font-bold">双路 FOC 无刷电机驱动板设计</h3>
-            <p class="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
+        <!-- Project 2 -->
+        <article class="py-6 grid grid-cols-1 md:grid-cols-[130px_1fr_auto] gap-2 md:gap-6 items-start group">
+          <div class="flex md:flex-col gap-2 md:gap-1">
+            <time class="font-mono text-[11px] text-[var(--text-muted)] font-medium">2026.03 — DONE</time>
+            <span class="font-mono text-[11px] text-[var(--text-faint)]">v1.0</span>
+          </div>
+          <div class="space-y-1.5">
+            <h3 class="text-[17px] sm:text-[18px] font-semibold leading-snug group-hover:text-[var(--accent)] dark:group-hover:text-[var(--accent)] transition-colors">双路 FOC 无刷电机驱动板设计</h3>
+            <p class="text-[14px] sm:text-[15px] leading-[1.7] text-[var(--text-body)]">
               4 层 PCB 布局，集成硬件采样电流环与 CAN 2.0B 总线通信，专注于机器人关节伺服控制与低速高扭矩响应。
             </p>
           </div>
-          <div class="font-grotesk text-xs font-bold text-neutral-800 dark:text-neutral-200 whitespace-nowrap bg-black/5 dark:bg-white/5 px-3 py-2 rounded-lg">
-            STM32F4 / KiCad / CAN
+          <div class="flex flex-wrap gap-1.5 md:justify-end">
+            <span class="tag-pill">STM32F4</span>
+            <span class="tag-pill">KiCad</span>
+            <span class="tag-pill">CAN</span>
           </div>
-        </div>
-
+        </article>
       </div>
     </section>
 
-    <!-- 6. 摄影与镜头记录 (加载你给的本地图二与图三) -->
-    <section id="photos" class="space-y-6">
-      <div class="flex justify-between items-baseline border-b border-black/10 dark:border-white/10 pb-3">
-        <h2 class="font-cinemaItalic italic text-3xl font-bold">光学与摄影手记</h2>
-        <span class="text-sm font-mono font-bold text-emerald-700 dark:text-emerald-400">A7R2 + 35-150mm F2-2.8</span>
+    <!-- Photography -->
+    <section id="photos" class="py-10 border-t border-[var(--border)] reveal">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2 class="text-[22px] sm:text-[26px] font-semibold leading-tight">光学与摄影手记</h2>
+        <span class="font-mono text-[11px] text-[var(--text-faint)] font-medium tracking-[0.1em] hidden sm:inline">03 / Optical Record</span>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-        <!-- Photo Item 1 (图二：黄色海.jpg) -->
-        <div class="rounded-2xl p-5 bg-cardLight dark:bg-cardDark border border-black/5 dark:border-white/10 space-y-4">
-          <div class="aspect-[16/10] bg-neutral-900 rounded-xl overflow-hidden relative">
-            <img src="./黄色海.jpg"
-                 alt="Golden Ocean"
-                 class="w-full h-full object-cover"/>
+        <!-- Photo 1 -->
+        <figure class="space-y-3">
+          <div class="rounded-lg overflow-hidden border border-[var(--border)] bg-black">
+            <button type="button" data-lightbox aria-label="放大查看：浪潮与波光边缘" class="block w-full cursor-zoom-in">
+              <img src="./黄色海.jpg"
+                   alt="暮色海面金色波光"
+                   width="1500" height="1000"
+                   loading="lazy" decoding="async"
+                   class="w-full aspect-[3/2] object-cover transition-transform duration-300 hover:scale-[1.015]"/>
+            </button>
           </div>
-          <div class="space-y-2">
-            <div class="flex justify-between items-center font-mono text-sm pt-1">
-              <span class="font-bold text-neutral-950 dark:text-neutral-50">[OPTICS-01] 浪潮与波光边缘</span>
-              <span class="font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">35mm · f/2.0</span>
+          <figcaption class="space-y-1.5 px-0.5">
+            <div class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+              <span class="text-[15px] font-semibold">浪潮与波光边缘</span>
+              <span class="font-mono text-[11px] text-[var(--accent)]">35mm · f/2.0</span>
             </div>
-            <p class="text-xs text-neutral-600 dark:text-neutral-400 font-mono">
-              EXIF: 1/500s · ISO 200 | 暮色水面高光动态范围捕捉与暗部噪点压制。
-            </p>
-          </div>
-        </div>
+            <p class="text-[13px] leading-[1.6] text-[var(--text-body)]">暮色水面高光动态范围捕捉与暗部噪点压制。</p>
+            <p class="font-mono text-[11px] text-[var(--text-muted)] font-medium">1/500s · ISO 200 · A7R2</p>
+          </figcaption>
+        </figure>
 
-        <!-- Photo Item 2（教堂.jpg，网页压缩版） -->
-        <div class="rounded-2xl p-5 bg-cardLight dark:bg-cardDark border border-black/5 dark:border-white/10 space-y-4">
-          <div class="aspect-[16/10] bg-neutral-900 rounded-xl overflow-hidden relative">
-            <img src="./教堂.jpg"
-                 alt="教堂玫瑰花窗"
-                 class="w-full h-full object-cover"/>
+        <!-- Photo 2 -->
+        <figure class="space-y-3">
+          <div class="rounded-lg overflow-hidden border border-[var(--border)] bg-black">
+            <button type="button" data-lightbox aria-label="放大查看：玫瑰花窗微观光谱" class="block w-full cursor-zoom-in">
+              <img src="./教堂.jpg"
+                   alt="教堂玫瑰花窗透光结构"
+                   width="1500" height="1000"
+                   loading="lazy" decoding="async"
+                   class="w-full aspect-[3/2] object-cover transition-transform duration-300 hover:scale-[1.015]"/>
+            </button>
           </div>
-          <div class="space-y-2">
-            <div class="flex justify-between items-center font-mono text-sm pt-1">
-              <span class="font-bold text-neutral-950 dark:text-neutral-50">[OPTICS-02] 玫瑰花窗微观光谱</span>
-              <span class="font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">150mm · f/2.8</span>
+          <figcaption class="space-y-1.5 px-0.5">
+            <div class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+              <span class="text-[15px] font-semibold">玫瑰花窗微观光谱</span>
+              <span class="font-mono text-[11px] text-[var(--accent)]">150mm · f/2.8</span>
             </div>
-            <p class="text-xs text-neutral-600 dark:text-neutral-400 font-mono">
-              EXIF: 1/250s · ISO 400 | 长焦端高色彩饱和度透光结构与几何锐度测试。
-            </p>
-          </div>
-        </div>
-
+            <p class="text-[13px] leading-[1.6] text-[var(--text-body)]">长焦端高色彩饱和度透光结构与几何锐度测试。</p>
+            <p class="font-mono text-[11px] text-[var(--text-muted)] font-medium">1/250s · ISO 400 · A7R2</p>
+          </figcaption>
+        </figure>
       </div>
     </section>
 
-    <!-- 7. 页脚 -->
-    <footer class="pt-8 border-t border-black/10 dark:border-white/10 flex justify-between items-center font-mono text-xs text-neutral-500">
-      <div>SYLVIE.RS © 2026</div>
-      <div class="flex gap-6 font-semibold">
-        <a href="https://github.com/SylvieChristian" target="_blank" rel="noopener noreferrer" class="hover:text-neutral-900 dark:hover:text-white transition-colors">GITHUB</a>
-        <a href="#" class="hover:text-neutral-900 dark:hover:text-white transition-colors">BILIBILI</a>
-      </div>
-    </footer>
+  </main>
 
+  <!-- Footer -->
+  <footer class="relative z-10 border-t border-[var(--border)]">
+    <div class="max-w-5xl mx-auto px-5 sm:px-6 py-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+      <div class="font-mono text-[11px] text-[var(--text-muted)] font-medium tracking-[0.06em] flex items-center gap-2.5">
+        <span>SYLVIE.RS © 2026</span>
+        <span class="text-[var(--text-faint)]">|</span>
+        <span>A7R2 + 35-150mm F2-2.8</span>
+      </div>
+      <nav class="flex gap-5 font-mono text-[11px] font-medium uppercase tracking-[0.06em]" aria-label="外部链接">
+        <a href="https://github.com/SylvieChristian" target="_blank" rel="noopener noreferrer" class="text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors">GitHub</a>
+        <a href="#" class="text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors">Bilibili</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox fixed inset-0 z-[200] flex items-center justify-center bg-black/92 p-4 sm:p-8" role="dialog" aria-modal="true" aria-label="图片预览">
+    <button id="lightboxClose" class="absolute top-4 right-4 sm:top-6 sm:right-6 w-9 h-9 flex items-center justify-center rounded-sm bg-white/10 hover:bg-white/20 text-white/80 hover:text-white text-lg transition-colors" aria-label="关闭预览">&times;</button>
+    <img id="lightboxImg" src="" alt="" class="max-w-full max-h-[85vh] object-contain rounded-sm"/>
+    <p id="lightboxCaption" class="absolute bottom-5 left-1/2 -translate-x-1/2 font-mono text-[11px] text-white/60 tracking-wide text-center max-w-[90vw]"></p>
   </div>
 
   <script>
+    // === Theme toggle ===
     const themeToggleBtn = document.getElementById('themeToggle');
+    function updateThemeUI(isDark) {
+      themeToggleBtn.textContent = isDark ? 'DARK' : 'LIGHT';
+    }
+    (function() {
+      const stored = localStorage.getItem('theme');
+      if (stored === 'light') document.documentElement.classList.remove('dark');
+      updateThemeUI(document.documentElement.classList.contains('dark'));
+    })();
     themeToggleBtn.addEventListener('click', () => {
       document.documentElement.classList.toggle('dark');
+      const isDark = document.documentElement.classList.contains('dark');
+      localStorage.theme = isDark ? 'dark' : 'light';
+      updateThemeUI(isDark);
+    });
+
+    // === Scroll reveal ===
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+
+    // === Lightbox ===
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxClose = document.getElementById('lightboxClose');
+    let lastFocused = null;
+
+    document.querySelectorAll('[data-lightbox]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const img = btn.querySelector('img');
+        if (!img) return;
+        lastFocused = btn;
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        const fig = btn.closest('figure');
+        const exifEl = fig ? fig.querySelector('p.font-mono') : null;
+        lightboxCaption.textContent = exifEl ? exifEl.textContent : '';
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        lightboxClose.focus();
+      });
+      // Keyboard: Enter/Space
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+      if (lastFocused) lastFocused.focus();
+    }
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
     });
   </script>
 </body>
